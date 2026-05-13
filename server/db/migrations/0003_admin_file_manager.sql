@@ -1,0 +1,42 @@
+CREATE TABLE IF NOT EXISTS `ta_admin_file_group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `code` varchar(64) NOT NULL,
+  `description` varchar(255) NOT NULL DEFAULT '',
+  `sort` int NOT NULL DEFAULT 0,
+  `status` tinyint NOT NULL DEFAULT 1,
+  `created_by` int NOT NULL DEFAULT 0,
+  `updated_by` int NOT NULL DEFAULT 0,
+  `created_at` int NOT NULL DEFAULT 0,
+  `updated_at` int NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ta_admin_file_group_uk_code` (`code`),
+  KEY `ta_admin_file_group_idx_status_sort` (`status`, `sort`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `ta_admin_file` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `group_id` int NOT NULL DEFAULT 0,
+  `storage_driver` varchar(30) NOT NULL DEFAULT 'local',
+  `original_name` varchar(255) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `ext` varchar(30) NOT NULL DEFAULT '',
+  `mime` varchar(100) NOT NULL DEFAULT '',
+  `size` int NOT NULL DEFAULT 0,
+  `hash` varchar(64) NOT NULL DEFAULT '',
+  `path` varchar(500) NOT NULL,
+  `public_url` varchar(500) NOT NULL,
+  `kind` varchar(30) NOT NULL DEFAULT 'file',
+  `status` tinyint NOT NULL DEFAULT 1,
+  `uploader_id` int NOT NULL DEFAULT 0,
+  `uploader_name` varchar(100) NOT NULL DEFAULT '',
+  `meta_json` text,
+  `created_at` int NOT NULL DEFAULT 0,
+  `updated_at` int NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `ta_admin_file_idx_group` (`group_id`),
+  KEY `ta_admin_file_idx_kind` (`kind`),
+  KEY `ta_admin_file_idx_hash` (`hash`),
+  KEY `ta_admin_file_idx_uploader` (`uploader_id`),
+  KEY `ta_admin_file_idx_status_created` (`status`, `created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

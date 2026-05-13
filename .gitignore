@@ -1,0 +1,28 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# 上传文件目录（可本地保留，不提交）
+public/uploads
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env.local
+.env.*.local
+!.env.development
+!.env.production

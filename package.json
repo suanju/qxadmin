@@ -1,0 +1,43 @@
+{
+  "name": "qxadmin",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "node --no-deprecation node_modules/nuxt/bin/nuxt.mjs build --dotenv .env.production && node --no-deprecation scripts/generate_ecosystem.mjs",
+    "dev": "node --no-deprecation node_modules/nuxt/bin/nuxt.mjs dev --dotenv .env.development",
+    "ecosystem:generate": "node --no-deprecation scripts/generate_ecosystem.mjs",
+    "generate": "node --no-deprecation node_modules/nuxt/bin/nuxt.mjs generate",
+    "preview": "node --no-deprecation node_modules/nuxt/bin/nuxt.mjs preview",
+    "postinstall": "node --no-deprecation node_modules/nuxt/bin/nuxt.mjs prepare",
+    "logs:summary": "node --no-deprecation scripts/manage_logs.mjs summary",
+    "logs:cleanup": "node --no-deprecation scripts/manage_logs.mjs cleanup",
+    "logs:archive": "node --no-deprecation scripts/manage_logs.mjs archive",
+    "rbac:sync": "node --no-deprecation scripts/sync_admin_rbac_permissions.mjs",
+    "rbac:verify-db": "node --no-deprecation scripts/verify_admin_rbac_db.mjs",
+    "rbac:verify-routes": "node --no-deprecation scripts/verify_admin_rbac_routes.mjs",
+    "rbac:precheck-db": "node --no-deprecation scripts/precheck_rbac_db.mjs",
+    "db:init": "node --no-deprecation scripts/init_admin_core_db.mjs",
+    "demo-users:seed": "node --no-deprecation scripts/seed_demo_users.mjs",
+    "db:generate": "node --no-deprecation node_modules/drizzle-kit/bin.cjs generate",
+    "db:push": "node --no-deprecation node_modules/drizzle-kit/bin.cjs push"
+  },
+  "dependencies": {
+    "@internationalized/date": "3.11.0",
+    "@nuxt/ui": "^4.4.0",
+    "dotenv": "^17.3.1",
+    "drizzle-orm": "^0.45.1",
+    "ip2region.js": "^3.1.8",
+    "jose": "^6.1.3",
+    "mysql2": "^3.16.3",
+    "nuxt": "^4.3.1",
+    "tailwindcss": "^4.1.18",
+    "vue": "^3.5.27",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.2.89",
+    "@types/node": "^25.3.1",
+    "@vitejs/plugin-vue-jsx": "^5.1.4",
+    "drizzle-kit": "^0.31.8"
+  }
+}

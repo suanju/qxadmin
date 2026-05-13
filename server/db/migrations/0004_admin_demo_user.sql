@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS `ta_admin_demo_user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `nickname` varchar(100) NOT NULL DEFAULT '',
+  `email` varchar(120) NOT NULL DEFAULT '',
+  `mobile` varchar(30) NOT NULL DEFAULT '',
+  `department` varchar(100) NOT NULL DEFAULT '',
+  `role_name` varchar(100) NOT NULL DEFAULT '普通用户',
+  `status` tinyint NOT NULL DEFAULT 1,
+  `source` varchar(50) NOT NULL DEFAULT 'manual',
+  `remark` varchar(255) NOT NULL DEFAULT '',
+  `last_active_at` int NOT NULL DEFAULT 0,
+  `created_by` int NOT NULL DEFAULT 0,
+  `updated_by` int NOT NULL DEFAULT 0,
+  `created_at` int NOT NULL DEFAULT 0,
+  `updated_at` int NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ta_admin_demo_user_uk_username` (`username`),
+  KEY `ta_admin_demo_user_idx_status` (`status`),
+  KEY `ta_admin_demo_user_idx_created` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
