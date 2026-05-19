@@ -32,6 +32,7 @@
 - [`ai-work/2026-05-12_remove_rbac_static_fallback.md`](ai-work/2026-05-12_remove_rbac_static_fallback.md)：移除 RBAC 静态兜底与双轨运行模式记录
 - [`ai-work/2026-05-12_directory_file_naming_normalization.md`](ai-work/2026-05-12_directory_file_naming_normalization.md)：目录与文件命名规范化记录
 - [`ai-work/2026-05-12_nuxt_ui_table_pinning_standard.md`](ai-work/2026-05-12_nuxt_ui_table_pinning_standard.md)：Nuxt UI Table 操作列 pinning 规范化记录
+- [`ai-work/2026-05-19_dependency_latest_upgrade.md`](ai-work/2026-05-19_dependency_latest_upgrade.md)：依赖升级到 npm 最新版本与兼容验证记录
 
 ### 架构文档
 
