@@ -1,5 +1,5 @@
 import { index, int, mysqlTable, text, tinyint, unique, varchar } from 'drizzle-orm/mysql-core'
-import { tablePrefix } from '../constants'
+import { tablePrefix } from '../../constants'
 
 /** 后台动态权限目录表：承载目录、菜单、页面、按钮与 API matcher */
 export const adminPermission = mysqlTable(

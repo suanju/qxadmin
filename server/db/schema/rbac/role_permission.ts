@@ -1,5 +1,5 @@
 import { index, int, mysqlTable, unique, varchar } from 'drizzle-orm/mysql-core'
-import { tablePrefix } from '../constants'
+import { tablePrefix } from '../../constants'
 
 /** 后台角色权限关联表：兼容旧 permission_code，并逐步迁移到动态权限 permission_id */
 export const adminRolePermission = mysqlTable(

@@ -1,5 +1,5 @@
 import { index, int, mysqlTable, text, tinyint, unique, varchar } from 'drizzle-orm/mysql-core'
-import { tablePrefix } from '../constants'
+import { tablePrefix } from '../../constants'
 
 /** 后台文件分组：用于把上传资源按业务或用途归类 */
 export const adminFileGroup = mysqlTable(

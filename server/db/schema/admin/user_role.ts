@@ -1,5 +1,5 @@
 import { index, int, mysqlTable, unique } from 'drizzle-orm/mysql-core'
-import { tablePrefix } from '../constants'
+import { tablePrefix } from '../../constants'
 
 /** 后台管理员与角色关联表 */
 export const adminUserRole = mysqlTable(

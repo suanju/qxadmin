@@ -12,6 +12,8 @@
 - 系统设置
 - 操作日志
 - 上传能力
+- 文件管理
+- 用户列表示例
 - 通用 Dashboard
 - MySQL 持久化与 Drizzle ORM
 
@@ -98,7 +100,11 @@
 app/
   assets/        # 全局样式与静态样式资源
   components/    # 可复用页面组件
+    admin/       # admin 通用组件
+      table/     # 表格搜索、批量操作、分页等表格基础件
   composables/   # 组合式函数
+    admin.ts     # admin 组合式函数自动导入聚合出口
+    admin/       # admin 鉴权、请求、表格、列表、写操作反馈等组合式函数
   layouts/       # Nuxt 布局
   middleware/    # 前端路由中间件
   pages/         # 页面路由
@@ -108,9 +114,16 @@ server/
   api/           # JSON API
   constants/     # 服务端常量
   db/            # Drizzle 连接、schema、migration
+    schema/
+      admin/     # 管理员、角色、管理员角色关系
+      rbac/      # 权限目录、角色权限关系、数据权限预留
+      system/    # 系统配置、操作日志
+      files/     # 后台文件记录
+      demo/      # 示例 CRUD 资源
   lib/           # 底层能力，如鉴权 token、密码、验证码
   middleware/    # 服务端中间件
   plugins/       # Nitro 插件
+  rbac/          # 动态 RBAC 模块声明
   services/      # 后台业务服务层
   utils/         # 服务端工具函数
 
@@ -132,20 +145,29 @@ docs/
 
 - `public/`
 - `scripts/`
+  - `scripts/rbac/`
+  - `scripts/db/`
+  - `scripts/logs/`
+  - `scripts/deployment/`
+  - `scripts/seeds/`
 - `log/`
+- `logs/`
 
 ### 3.1 页面目录规则
 
 - 所有 Nuxt 页面放在 `app/pages/**`
 - 页面内部私有区块可以继续使用 `blocks/` 目录
 - `blocks/` 下文件仅用于页面内部复用，不作为公共组件出口
+- `nuxt.config.ts` 已通过 `pages.pattern` 排除 `**/blocks/**`，新增页面私有块时不要让其成为路由
 
 ### 3.2 服务端目录规则
 
 - JSON API 放到 `server/api/**`
 - 底层鉴权、密码、token、验证码能力放到 `server/lib/**`
 - 账号、角色、配置、日志等后台业务编排逻辑放到 `server/services/**`
+- 动态 RBAC 权限声明放到 `server/rbac/modules/*.json`
 - 通用工具放到 `server/utils/**`
+- 新增动态菜单图标时，如果图标只出现在 `server/rbac/modules/*.json`，需要同步检查 `nuxt.config.ts` 的 `ADMIN_LAYOUT_EAGER_ICON_NAMES`
 
 ### 3.3 数据库目录规则
 
@@ -206,8 +228,12 @@ docs/
 - `/settings`
 - `/operation_logs`
 - `/admin_accounts`
+- `/files`
+- `/user_management/demo_users`
 
-新增页面应优先贴合这些既有 admin 核心域，而不是重新扩散业务域。
+其中 `/user_management/demo_users` 是当前 admin 内核的用户列表与 CRUD 示例，用于沉淀通用后台列表、批量操作、审计与 RBAC 接入模式，不代表恢复原业务用户体系。
+
+新增页面应优先贴合这些既有 admin 核心域，而不是重新扩散订单、支付、报表、投放等已下线业务域。
 
 ### 5.3 页面职责
 
@@ -232,7 +258,7 @@ Nuxt 页面主要负责：
 
 ### 5.5 后台交互要求
 
-当前后台存在配置、管理员、角色等写操作。
+当前后台存在配置、管理员、角色、文件、示例用户等写操作。
 
 所有写操作必须满足：
 
@@ -250,7 +276,7 @@ Nuxt 页面主要负责：
 页面中重复出现的结构优先抽到 `app/components/**`，例如：
 
 - 表格分页条
-- 过滤栏
+- 表格搜索、批量操作等表格基础件
 - 弹窗编辑器
 - 公共统计面板
 - 公共表单片段
@@ -262,11 +288,12 @@ Nuxt 页面主要负责：
 - props 类型必须明确
 - 组件优先服务当前 admin 核心业务，不做过度抽象
 - 公共组件放 `app/components/**`
+- 表格相关公共组件放 `app/components/admin/table/**`
 - 页面私有组件放 `app/pages/**/blocks/**`
 
 ### 6.3 组合式函数要求
 
-- 通用数据请求、导航、选项构造逻辑优先放在 `app/composables/**`
+- admin 通用数据请求、导航、选项构造逻辑优先放在 `app/composables/admin/**`
 - 后台接口请求优先复用已有封装，例如 `useAdminFetch`
 - 不要在多个页面重复堆同一套请求容错逻辑
 
@@ -302,8 +329,11 @@ API 路由层不应承担：
 
 - 管理员账户处理
 - 角色与权限处理
+- 动态权限目录、菜单树与 API matcher 处理
 - 系统配置处理
 - 操作日志查询
+- 文件上传与文件记录处理
+- 示例 CRUD 资源处理
 - Dashboard 数据汇总
 
 凡是跨多个表、多步骤、带规则的逻辑，优先放在 service 层。
@@ -329,21 +359,27 @@ API 路由层不应承担：
 
 关键单一真源如下：
 
+- `server/rbac/modules/*.json`
+- `server/db/schema/rbac/permission.ts`
+- `server/services/auth/admin_permission_catalog.ts`
 - `shared/constants/admin_permissions.ts`
-- `server/constants/admin_permission_routes.ts`
 - `server/middleware/admin_auth.ts`
 - `server/services/auth/admin_permission.ts`
-- `app/composables/use_admin_auth.ts`
+- `app/composables/admin/use_auth.ts`
 - `app/middleware/auth.global.ts`
 
 必须明确：
 
 - 前端菜单隐藏、按钮隐藏、页面跳转限制，只是体验层；真正安全边界始终在 `server/middleware/admin_auth.ts`
-- 任何新增后台功能，如果只改前端 `can(...)` 或只藏按钮，但没有补服务端权限映射，都视为未完成
-- 任何新增后台 API，如果没有进入 `server/constants/admin_permission_routes.ts`，都视为 RBAC 未接入完成
+- 当前运行时 RBAC 使用数据库 `admin_permission` 权限目录中的 API matcher
+- `server/constants/admin_permission_routes.ts` 静态映射已移除，不再作为运行时兜底
+- 任何新增后台功能，如果只改前端 `can(...)` 或只藏按钮，但没有补 `server/rbac/modules/*.json` 并同步数据库权限，都视为未完成
+- 任何新增后台 API，如果没有在 `server/rbac/modules/*.json` 中声明 `type=api` 权限并通过 `rbac:sync`、`rbac:verify-routes` 验证，都视为 RBAC 未接入完成
 
 当前 RBAC 的运行前提：
 
+- 权限目录、菜单、按钮和 API matcher 以数据库 `admin_permission` 为运行时来源
+- 新增或调整权限后必须执行 `npm run rbac:sync` 将 `server/rbac/modules/*.json` 同步入库
 - `ADMIN_RBAC_ENFORCE=true` 时，后台 API 才会对普通管理员严格返回 403
 - 未开启强制模式时，当前中间件默认是“观察模式”
 
@@ -374,8 +410,11 @@ API 路由层不应承担：
 - 后台管理员
 - 后台角色
 - 管理员-角色关系
+- 权限目录
 - 角色-权限关系
 - 后台操作日志
+- 后台文件记录
+- 示例用户数据
 
 ### 8.2 结构定义规则
 
@@ -458,17 +497,25 @@ API 路由层不应承担：
 - `preview`
 - `postinstall`
 - `ecosystem:generate`
+- `logs:summary`
+- `logs:cleanup`
+- `logs:archive`
+- `rbac:sync`
+- `rbac:verify-db`
 - `rbac:verify-routes`
 - `rbac:precheck-db`
+- `db:init`
 - `db:generate`
 - `db:push`
+- `demo-users:seed`
 
 ### 10.3 自检建议
 
 提交前至少根据改动范围验证：
 
 - `npm run build`
-- 如果改动了后台权限、后台页面、`/api/admin/**` 路由或管理员角色能力：`npm run rbac:verify-routes`
+- 如果改动了权限声明、菜单、按钮或新增后台 API：先执行 `npm run rbac:sync`
+- 如果改动了后台权限、后台页面、`/api/admin/**` 路由或管理员角色能力：执行 `npm run rbac:verify-db` 与 `npm run rbac:verify-routes`
 - 相关页面是否能正常打开
 - 对应 API 是否返回预期数据
 - 相关 Drizzle schema 与 migration 是否匹配

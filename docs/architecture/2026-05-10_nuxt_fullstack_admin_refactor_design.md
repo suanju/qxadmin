@@ -46,11 +46,11 @@
 - API 权限声明：`server/rbac/modules/*.json`
 - 服务端安全边界：`server/middleware/admin_auth.ts`
 - 角色授权读取：`server/services/auth/admin_permission.ts`
-- 前端权限体验：`app/composables/use_admin_auth.ts`、`app/middleware/auth.global.ts`
+- 前端权限体验：`app/composables/admin/use_auth.ts`、`app/middleware/auth.global.ts`
 
 当前系统配置：
 
-- 表：`server/db/schema/config.ts`
+- 表：`server/db/schema/system/config.ts`
 - service：`server/services/config/admin_config.ts`
 - 模型：单表 `name/group/title/tip/type/value`
 
@@ -819,7 +819,7 @@ npm run admin:make-crud <module> <resource>
 
 - `server/api/admin/<resource>/**`
 - `server/services/<module>/<resource>.ts`
-- `server/db/schema/<resource>.ts`
+- `server/db/schema/<domain>/<resource>.ts`
 - `app/pages/<resource>/index.vue`
 - `server/rbac/modules/<resource>.ts`
 - 默认操作日志事件类型。

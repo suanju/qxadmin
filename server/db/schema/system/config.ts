@@ -1,5 +1,5 @@
 import { mysqlTable, varchar, int, text, unique } from 'drizzle-orm/mysql-core'
-import { tablePrefix } from '../constants'
+import { tablePrefix } from '../../constants'
 
 /** 系统配置表：按 group 分组，type 为 string|text|int|bool|array|datetime|date|file|image */
 export const config = mysqlTable(

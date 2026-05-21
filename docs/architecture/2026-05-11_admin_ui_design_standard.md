@@ -64,7 +64,7 @@ qxadmin 当前技术栈是 Nuxt 4 + Vue 3 + `@nuxt/ui`，因此只学习结构�
 
 ## 批量操作条
 
-统一组件：`app/components/admin/admin_table_bulk_bar.vue`
+统一组件：`app/components/admin/table/bulk_bar.vue`
 
 使用规则：
 

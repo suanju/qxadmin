@@ -1,5 +1,5 @@
 import { index, int, mysqlTable, tinyint, unique, varchar } from 'drizzle-orm/mysql-core'
-import { tablePrefix } from '../constants'
+import { tablePrefix } from '../../constants'
 
 /** 后台角色表：保存角色编码、展示名称、状态与系统内置标记 */
 export const adminRole = mysqlTable(

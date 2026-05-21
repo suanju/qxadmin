@@ -21,7 +21,7 @@
 
 PM2 标准输出日志：
 
-- `scripts/generate_ecosystem.mjs` 会在 `.output/ecosystem.config.js` 中生成：
+- `scripts/deployment/generate_ecosystem.mjs` 会在 `.output/ecosystem.config.js` 中生成：
   - `logs/pm2-out.log`
   - `logs/pm2-error.log`
 - 业务 API 日志仍以项目自己的 `logs/YYYYMM/*.log` 为主。

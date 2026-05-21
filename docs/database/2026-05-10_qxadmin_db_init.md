@@ -2,7 +2,7 @@
 
 > 日期：2026-05-10  
 > 目的：将本地数据库从历史 `traffic_backend` 规范为 `qxadmin`，并提供可重复执行的 admin 内核初始化流程。  
-> 涉及范围：`.env.development`、`.env.production`、`scripts/init_admin_core_db.mjs`、`server/db/migrations/**`、`package.json`。  
+> 涉及范围：`.env.development`、`.env.production`、`scripts/db/init_admin_core.mjs`、`server/db/migrations/**`、`package.json`。
 > 是否影响后台核心链路：影响。该流程直接支撑后台登录、RBAC、账号角色、设置、日志和 Dashboard 查询。
 
 ## 当前连接

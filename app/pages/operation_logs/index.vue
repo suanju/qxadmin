@@ -6,7 +6,7 @@ import {
   createAdminActionColumnMeta,
   createAdminActionColumnPinning,
   renderAdminPinnedActionHeader
-} from '~/composables/use_admin_table'
+} from '~/composables/admin/use_table'
 
 definePageMeta({ layout: 'default' })
 

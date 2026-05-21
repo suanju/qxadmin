@@ -33,6 +33,7 @@
 - [`ai-work/2026-05-12_directory_file_naming_normalization.md`](ai-work/2026-05-12_directory_file_naming_normalization.md)：目录与文件命名规范化记录
 - [`ai-work/2026-05-12_nuxt_ui_table_pinning_standard.md`](ai-work/2026-05-12_nuxt_ui_table_pinning_standard.md)：Nuxt UI Table 操作列 pinning 规范化记录
 - [`ai-work/2026-05-19_dependency_latest_upgrade.md`](ai-work/2026-05-19_dependency_latest_upgrade.md)：依赖升级到 npm 最新版本与兼容验证记录
+- [`ai-work/2026-05-19_directory_second_level_grouping.md`](ai-work/2026-05-19_directory_second_level_grouping.md)：按功能相近原则整理二级目录与脚本入口记录
 
 ### 架构文档
 

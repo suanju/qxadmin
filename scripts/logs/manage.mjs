@@ -9,7 +9,7 @@ import dotenv from 'dotenv'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-const projectRoot = resolve(__dirname, '..')
+const projectRoot = resolve(__dirname, '..', '..')
 const DAY_MS = 24 * 60 * 60 * 1000
 const DEFAULT_RETENTION_DAYS = 30
 
@@ -217,7 +217,7 @@ async function main() {
   } else if (options.command === 'archive') {
     await commandArchive(options)
   } else {
-    console.error('Usage: node scripts/manage_logs.mjs <summary|cleanup|archive> [--dry-run] [--dir logs] [--days 30] [--archive-days 7] [--delete-source]')
+    console.error('Usage: node scripts/logs/manage.mjs <summary|cleanup|archive> [--dry-run] [--dir logs] [--days 30] [--archive-days 7] [--delete-source]')
     process.exitCode = 1
   }
 }

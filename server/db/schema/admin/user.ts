@@ -1,5 +1,5 @@
 import { index, int, mysqlTable, tinyint, unique, varchar } from 'drizzle-orm/mysql-core'
-import { tablePrefix } from '../constants'
+import { tablePrefix } from '../../constants'
 
 /** 后台管理员账户表：保存分账户登录、禁用、token 版本与最近登录信息 */
 export const adminUser = mysqlTable(

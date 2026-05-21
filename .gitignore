@@ -10,7 +10,7 @@ dist
 node_modules
 
 # Logs
-logs
+/logs/
 *.log
 
 # 上传文件目录（可本地保留，不提交）

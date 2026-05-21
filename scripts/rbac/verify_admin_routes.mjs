@@ -1,7 +1,7 @@
 import { config as loadEnv } from 'dotenv'
 import mysql from 'mysql2/promise'
 
-import { isPublicAdminApiRoute, scanAdminApiRoutes } from './lib/admin_api_route_scanner.mjs'
+import { isPublicAdminApiRoute, scanAdminApiRoutes } from '../lib/admin_api_route_scanner.mjs'
 
 loadEnv({ path: process.env.DOTENV_CONFIG_PATH || '.env.development', quiet: true })
 

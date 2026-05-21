@@ -1,5 +1,5 @@
 import { index, int, mysqlTable, tinyint, unique, varchar } from 'drizzle-orm/mysql-core'
-import { tablePrefix } from '../constants'
+import { tablePrefix } from '../../constants'
 
 /** 示例用户表：用于展示 admin 列表页、统一表单弹窗与批量操作样式 */
 export const adminDemoUser = mysqlTable(

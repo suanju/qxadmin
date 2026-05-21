@@ -1,5 +1,5 @@
 import { mysqlTable, int, varchar, text, json, tinyint } from 'drizzle-orm/mysql-core'
-import { tablePrefix } from '../constants'
+import { tablePrefix } from '../../constants'
 
 /** 后台操作日志：记录管理员在后台的关键操作以及变更明细 */
 export const adminOperationLog = mysqlTable(`${tablePrefix}admin_operation_log`, {
